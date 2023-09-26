@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .forms import ExpenseForm
 from .models import Expense
 from django.db.models import Sum
+import datetime
 # Create your views here.
 def index(request):
     if request.method == "POST":
@@ -10,9 +11,22 @@ def index(request):
             expense.save()
     expenses  = Expense.objects.all()
     total_exp = expenses.aggregate(Sum('amount'))
-    print(total_exp)
+    #logic to calculate weekly expense
+    last_week = datetime.date.today() - datetime.timedelta(days=7)
+    data = Expense.objects.filter(date__gt=last_week)
+    weekly_sum = data.aggregate(Sum('amount'))
+    
+    #logic to calculate 30days expense
+    last_month = datetime.date.today() - datetime.timedelta(days=30)
+    data = Expense.objects.filter(date__gt=last_month)
+    monthly_sum = data.aggregate(Sum('amount'))
+    
+    #logic to calculate 365days expense
+    last_year = datetime.date.today() - datetime.timedelta(days=365)
+    data = Expense.objects.filter(date__gt=last_year)
+    yearly_sum = data.aggregate(Sum('amount'))
     expenseform = ExpenseForm()
-    return render(request,'myapp/index.html',{'expenseform':expenseform,'expenses':expenses,'total_exp':total_exp})
+    return render(request,'myapp/index.html',{'weekly_sum':weekly_sum,'monthly_sum':monthly_sum,'yearly_sum':yearly_sum,'expenseform':expenseform,'expenses':expenses,'total_exp':total_exp})
 
 def edit(request,id):
     expense= Expense.objects.get(id=id)

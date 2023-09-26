@@ -81,7 +81,20 @@
             {{i.amount}}
             {{i.category}}
             </br>
-        
+        <div class="flex">
+            <div class="w-1/3 shadow-lg rounded-lg">
+                <h1 class="ml-10 font-bold text-grey-500">Last 365days</h1>
+                <h1 class="ml-10 my-5 text-2xl text-green-500 font-bold">$ {{yearly_sum.amount__sum|intcomma}}</h1>
+            </div>
+            <div class="w-1/3 shadow-lg rounded-lg">
+                <h1 class="ml-10 font-bold text-grey-500">Last 30days</h1>
+                <h1 class="ml-10 my-5 text-2xl text-green-500 font-bold">$ {{monthly_sum.amount__sum|intcomma}}</h1>
+            </div>
+            <div class="w-1/3 shadow-lg rounded-lg">
+                <h1 class="ml-10 font-bold text-grey-500">Last 7days</h1>
+                <h1 class="ml-10 my-5 text-2xl text-green-500 font-bold">$ {{weekly_sum.amount__sum|intcomma}}</h1>
+            </div>
+        </div>
     {%endblock%}
 </body>
 </html>
