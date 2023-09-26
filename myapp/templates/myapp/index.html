@@ -51,7 +51,7 @@
             {% for i in expenses %}
             <div class="expense-row flex-wrap px-20 py-5">
                 <span class="font-bold">{{i.name}}</span>
-                <span class="font-bold">{{i.amount}}</span>
+                <span class="font-bold">$ {{i.amount}}</span>
                 <span class="font-bold">{{i.category}}</span>
                 <span class="font-bold">{{i.date}}</span>
                 <span class="pl-32"><a href="{% url 'edit' i.id %}">
@@ -67,6 +67,13 @@
                 </span>
             </div>
             {% endfor%}
+            <!-- displaying total -->
+            <div class="px-72 py-5">
+                <span class="font-bold text-green-500">
+                    Total : ${{total_exp.amount__sum}}
+                </span>
+            </div>
+            
         </div>
         
             {{i.name}}
