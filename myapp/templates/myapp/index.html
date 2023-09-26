@@ -54,8 +54,17 @@
                 <span class="font-bold">{{i.amount}}</span>
                 <span class="font-bold">{{i.category}}</span>
                 <span class="font-bold">{{i.date}}</span>
-                <span class="font-bold"><a href="{% url 'edit' i.id %}">Edit</a></span>
-                <span class="font-bold"><a href="">Delete</a></span>
+                <span class="font-bold"><a href="{% url 'edit' i.id %}">
+                    <img class="h-5" src="{% static 'myapp/images/edit.png' %}" alt="">
+                </a></span>
+                <span class="font-bold">
+                    <form method="post" action="{% url 'delete' i.id %}">
+                        {% csrf_token %}
+                        <button type="submit" name="delete">
+                            <img class="h-5" src="{% static 'myapp/images/delete.png' %}" alt="">
+                        </button>
+                    </form>
+                </span>
             </div>
             {% endfor%}
         </div>
