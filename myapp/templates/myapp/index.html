@@ -135,7 +135,7 @@
                         </div>
                         <div class="flex flex-wrap px-20 py-5">
                             <span class="text-green-500">
-                                $ {{categorical_sum.sum|intcomma}}
+                                $ {{categorical_sum.sum}}
                             </span>
                         </div>
                     {% endfor %}
@@ -143,6 +143,60 @@
             </div>
         </div>
 
+        <div class="flex">
+            <div class="w-1/2 shadow-lg ml-10">
+                <h1 class="m-10">Expenses spread acroos categories</h1>
+                <canvas id="myChart" class="m-10"></canvas>
+            </div>
+            <div class="w-1/2 shadow-lg ml-10">
+
+            </div>
+        </div>
+
+   
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   
+        <script>
+            const cats=[]
+            const cat_sums = []
+
+            const catSumDiv = document.getElementById('category-table').getElementsByTagName('div')
+            
+            
+            for(i=0;i<catSumDiv.length;i++){
+                if(i%2==1){
+                    cat_sums.push(catSumDiv[i].innerText.replace("$",""))
+                }
+                else{
+                    cats.push(catSumDiv[i].innerText)
+                }
+            }
+            
+            
+            const ctx = document.getElementById('myChart');
+          
+            new Chart(ctx, {
+              type: 'pie',
+              data: {
+                labels: cats,
+                datasets: [{
+                  label: '# of Votes',
+                  data: cat_sums,
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          </script>
+
     {%endblock%}
+
 </body>
+
 </html>
